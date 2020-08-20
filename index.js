@@ -86,7 +86,7 @@ ZongJi.prototype._isChecksumEnabled = function(next) {
     .then(rows => {
       if (rows[0].checksum === 'NONE') {
         checksumEnabled = false;
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             query(this.ctrlConnection, 'SELECT 1').then((result) => {
             });
         }, 5000);
@@ -313,6 +313,8 @@ ZongJi.prototype.stop = function() {
       this.emit('stopped');
     }
   );
+
+  clearInterval(this.intervalId);
 };
 
 // It includes every events by default.
